@@ -1,15 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BoardButtons from "./components/BoardButtons";
+import Stickies from "./components/Stickies";
 
 const App = () => {
   const [stickies, setStickies] = useState<number[]>([]);
   const [prevStickies, setPrevStickies] = useState<number[]>([]);
-
-  useEffect(() => {
-    console.clear();
-    console.table(stickies);
-    console.log(prevStickies);
-  }, [stickies, prevStickies]);
 
   const handleNewSticky = () => {
     setPrevStickies([...stickies]);
@@ -27,11 +22,14 @@ const App = () => {
   };
 
   return (
-    <BoardButtons
-      onNewSticky={handleNewSticky}
-      onUndo={handleUndo}
-      onReset={handleReset}
-    />
+    <>
+      <BoardButtons
+        onNewSticky={handleNewSticky}
+        onUndo={handleUndo}
+        onReset={handleReset}
+      />
+      <Stickies>{stickies}</Stickies>
+    </>
   );
 };
 
