@@ -26,6 +26,16 @@ const App = () => {
     setStickies([]);
   };
 
+  const handleChangeColor = (id: number) => {
+    console.log("handleChangeColor: " + id);
+  };
+  const handleToggleList = (id: number) => {
+    console.log("handleToggleList: " + id);
+  };
+  const handleDelete = (id: number) => {
+    console.log("handleDelete: " + id);
+  };
+
   return (
     <>
       <BoardButtons
@@ -33,7 +43,12 @@ const App = () => {
         onUndo={handleUndo}
         onReset={handleReset}
       />
-      <Stickies stickies={stickies} />
+      <Stickies
+        stickies={stickies}
+        onChangeColor={(id) => handleChangeColor(id)}
+        onToggleList={(id) => handleToggleList(id)}
+        onDelete={(id) => handleDelete(id)}
+      />
     </>
   );
 };
