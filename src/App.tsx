@@ -3,12 +3,17 @@ import BoardButtons from "./components/BoardButtons";
 import Stickies from "./components/Stickies";
 
 const App = () => {
-  const [stickies, setStickies] = useState<number[]>([]);
-  const [prevStickies, setPrevStickies] = useState<number[]>([]);
+  const [stickies, setStickies] = useState<{}[]>([]);
+  const [prevStickies, setPrevStickies] = useState<{}[]>([]);
+
+  const newSticky = () => {
+    const id = Math.random();
+    return { id: id, text: id.toString(), color: "orange" };
+  };
 
   const handleNewSticky = () => {
     setPrevStickies([...stickies]);
-    setStickies([...stickies, Math.random()]);
+    setStickies([...stickies, newSticky()]);
   };
 
   const handleUndo = () => {
@@ -28,7 +33,7 @@ const App = () => {
         onUndo={handleUndo}
         onReset={handleReset}
       />
-      <Stickies>{stickies}</Stickies>
+      <Stickies stickies={stickies} />
     </>
   );
 };

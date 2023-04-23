@@ -1,12 +1,14 @@
+import Sticky from "./Sticky";
+
 interface Props {
-  children: number[];
+  stickies: {}[];
 }
 
-const Stickies = ({ children }: Props) => {
+const Stickies = ({ stickies }: Props) => {
   return (
     <>
-      {children.map((child: number) => (
-        <div key={child}>{child}</div>
+      {stickies.map((sticky: any) => (
+        <Sticky key={sticky.id} text={sticky.text} color={sticky.color} />
       ))}
     </>
   );
