@@ -3,12 +3,32 @@ import BoardButtons from "./components/BoardButtons";
 import Stickies from "./components/Stickies";
 
 const App = () => {
-  const [stickies, setStickies] = useState<{}[]>([]);
-  const [prevStickies, setPrevStickies] = useState<{}[]>([]);
+  const [stickies, setStickies] = useState<
+    { id: number; text: string; color: string }[]
+  >([]);
+  const [prevStickies, setPrevStickies] = useState<
+    { id: number; text: string; color: string }[]
+  >([]);
+
+  const getRandom = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const colorsArr = [
+    "sticky-pink",
+    "sticky-peach",
+    "sticky-yellow",
+    "sticky-lime",
+    "sticky-cyan",
+  ];
 
   const newSticky = () => {
-    const id = Math.random();
-    return { id: id, text: id.toString(), color: "orange" };
+    const id = new Date().getTime();
+    return {
+      id: id,
+      text: id.toString(),
+      color: colorsArr[getRandom(0, 4)],
+    };
   };
 
   const handleNewSticky = () => {
@@ -27,8 +47,16 @@ const App = () => {
   };
 
   const handleChangeColor = (id: number) => {
-    console.log("handleChangeColor: " + id);
+    const sticky = stickies.filter((sticky) => sticky.id === id)[0];
+    const colorIndex = colorsArr.indexOf(sticky.color);
+
+    setPrevStickies([...stickies]);
+    setStickies([
+      ...stickies.filter((sticky) => sticky.id !== id),
+      { ...sticky, color: colorsArr[colorIndex < 4 ? colorIndex + 1 : 0] },
+    ]);
   };
+
   const handleToggleList = (id: number) => {
     console.log("handleToggleList: " + id);
   };

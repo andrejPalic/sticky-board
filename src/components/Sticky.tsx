@@ -1,4 +1,5 @@
 import StickyButtons from "./StickyButtons";
+import "./Sticky.css";
 
 interface Props {
   text: string;
@@ -16,7 +17,7 @@ const Sticky = ({
   onDelete,
 }: Props) => {
   return (
-    <div style={{ color: color }}>
+    <div className={color}>
       {text}
       <StickyButtons
         onChangeColor={onChangeColor}
