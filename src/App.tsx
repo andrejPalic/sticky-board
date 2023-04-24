@@ -75,7 +75,8 @@ const App = () => {
   };
 
   const handleDelete = (id: number) => {
-    console.log("handleDelete: " + id);
+    setPrevStickies([...stickies]);
+    setStickies([...stickies.filter((sticky) => sticky.id !== id)]);
   };
 
   return (
