@@ -1,24 +1,24 @@
+import { Sticky } from "./types";
+
 import StickyButtons from "./StickyButtons";
 import "./StickyNote.css";
 
 interface Props {
-  text: string;
-  color: string;
+  sticky: Sticky;
   onChangeColor: () => void;
   onToggleList: () => void;
   onDelete: () => void;
 }
 
 const StickyNote = ({
-  text,
-  color,
+  sticky,
   onChangeColor,
   onToggleList,
   onDelete,
 }: Props) => {
   return (
-    <div className={color}>
-      {text}
+    <div className={sticky.color}>
+      {sticky.text}
       <StickyButtons
         onChangeColor={onChangeColor}
         onToggleList={onToggleList}

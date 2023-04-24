@@ -1,5 +1,7 @@
 export interface Sticky {
   id: number;
-  text: string;
   color: string;
+  isList: boolean;
+  text: string;
+  list: string[];
 }

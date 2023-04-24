@@ -19,8 +19,7 @@ const Stickies = ({
       {stickies.map((sticky: Sticky) => (
         <StickyNote
           key={sticky.id}
-          text={sticky.text}
-          color={sticky.color}
+          sticky={sticky}
           onChangeColor={() => onChangeColor(sticky.id)}
           onToggleList={() => onToggleList(sticky.id)}
           onDelete={() => onDelete(sticky.id)}

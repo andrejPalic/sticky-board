@@ -21,8 +21,10 @@ const App = () => {
 
   const newSticky: Sticky = {
     id: new Date().getTime(),
-    text: "",
     color: colorsArr[getRandom(0, 4)],
+    isList: false,
+    text: "",
+    list: [],
   };
 
   const handleNewSticky = () => {
@@ -52,8 +54,26 @@ const App = () => {
   };
 
   const handleToggleList = (id: number) => {
-    console.log("handleToggleList: " + id);
+    const sticky = stickies.filter((sticky) => sticky.id === id)[0];
+
+    setPrevStickies([...stickies]);
+
+    sticky.isList
+      ? setStickies([
+          ...stickies.filter((sticky) => sticky.id !== id),
+          { ...sticky, isList: false, text: sticky.list[0], list: [] },
+        ])
+      : setStickies([
+          ...stickies.filter((sticky) => sticky.id !== id),
+          {
+            ...sticky,
+            isList: true,
+            text: "",
+            list: [sticky.text, "more list items"],
+          },
+        ]);
   };
+
   const handleDelete = (id: number) => {
     console.log("handleDelete: " + id);
   };
