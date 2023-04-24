@@ -1,14 +1,11 @@
 import { useState } from "react";
 import BoardButtons from "./components/BoardButtons";
 import Stickies from "./components/Stickies";
+import { Sticky } from "./components/types";
 
 const App = () => {
-  const [stickies, setStickies] = useState<
-    { id: number; text: string; color: string }[]
-  >([]);
-  const [prevStickies, setPrevStickies] = useState<
-    { id: number; text: string; color: string }[]
-  >([]);
+  const [stickies, setStickies] = useState<Sticky[]>([]);
+  const [prevStickies, setPrevStickies] = useState<Sticky[]>([]);
 
   const getRandom = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -22,18 +19,15 @@ const App = () => {
     "sticky-cyan",
   ];
 
-  const newSticky = () => {
-    const id = new Date().getTime();
-    return {
-      id: id,
-      text: id.toString(),
-      color: colorsArr[getRandom(0, 4)],
-    };
+  const newSticky: Sticky = {
+    id: new Date().getTime(),
+    text: "",
+    color: colorsArr[getRandom(0, 4)],
   };
 
   const handleNewSticky = () => {
     setPrevStickies([...stickies]);
-    setStickies([...stickies, newSticky()]);
+    setStickies([...stickies, { ...newSticky, text: newSticky.id.toString() }]);
   };
 
   const handleUndo = () => {

@@ -1,7 +1,8 @@
-import Sticky from "./Sticky";
+import { Sticky } from "./types";
+import StickyNote from "./StickyNote";
 
 interface Props {
-  stickies: {}[];
+  stickies: Sticky[];
   onChangeColor: (id: number) => void;
   onToggleList: (id: number) => void;
   onDelete: (id: number) => void;
@@ -15,8 +16,8 @@ const Stickies = ({
 }: Props) => {
   return (
     <>
-      {stickies.map((sticky: any) => (
-        <Sticky
+      {stickies.map((sticky: Sticky) => (
+        <StickyNote
           key={sticky.id}
           text={sticky.text}
           color={sticky.color}

@@ -1,5 +1,5 @@
 import StickyButtons from "./StickyButtons";
-import "./Sticky.css";
+import "./StickyNote.css";
 
 interface Props {
   text: string;
@@ -9,7 +9,7 @@ interface Props {
   onDelete: () => void;
 }
 
-const Sticky = ({
+const StickyNote = ({
   text,
   color,
   onChangeColor,
@@ -28,4 +28,4 @@ const Sticky = ({
   );
 };
 
-export default Sticky;
+export default StickyNote;
