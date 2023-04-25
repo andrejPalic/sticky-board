@@ -17,3 +17,7 @@
 .sticky-cyan {
   background: #bbf6f3;
 }
+
+.placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}

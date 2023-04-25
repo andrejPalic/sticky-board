@@ -2,6 +2,6 @@ export interface Sticky {
   id: number;
   color: string;
   isList: boolean;
-  text: string;
-  list: string[];
+  text?: string;
+  list?: string[];
 }

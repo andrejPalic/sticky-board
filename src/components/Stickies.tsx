@@ -3,6 +3,7 @@ import StickyNote from "./StickyNote";
 
 interface Props {
   stickies: Sticky[];
+  onTextChange: (text: any, id: number) => void;
   onChangeColor: (id: number) => void;
   onToggleList: (id: number) => void;
   onDelete: (id: number) => void;
@@ -10,6 +11,7 @@ interface Props {
 
 const Stickies = ({
   stickies,
+  onTextChange,
   onChangeColor,
   onToggleList,
   onDelete,
@@ -20,6 +22,7 @@ const Stickies = ({
         <StickyNote
           key={sticky.id}
           sticky={sticky}
+          onTextChange={(text: string) => onTextChange(text, sticky.id)}
           onChangeColor={() => onChangeColor(sticky.id)}
           onToggleList={() => onToggleList(sticky.id)}
           onDelete={() => onDelete(sticky.id)}

@@ -27,9 +27,12 @@ const App = () => {
     list: [],
   };
 
+  const currentSticky = (id: number) =>
+    stickies.filter((sticky) => sticky.id === id)[0];
+
   const handleNewSticky = () => {
     setPrevStickies([...stickies]);
-    setStickies([...stickies, { ...newSticky, text: newSticky.id.toString() }]);
+    setStickies([...stickies, newSticky]);
   };
 
   const handleUndo = () => {
@@ -40,6 +43,14 @@ const App = () => {
   const handleReset = () => {
     setPrevStickies([]);
     setStickies([]);
+  };
+
+  const handleTextChange = (text: any, id: number) => {
+    setPrevStickies([...stickies]);
+    setStickies([
+      ...stickies.filter((sticky) => sticky.id !== id),
+      { ...currentSticky(id), text: text },
+    ]);
   };
 
   const handleChangeColor = (id: number) => {
@@ -54,24 +65,28 @@ const App = () => {
   };
 
   const handleToggleList = (id: number) => {
-    const sticky = stickies.filter((sticky) => sticky.id === id)[0];
-
     setPrevStickies([...stickies]);
 
-    sticky.isList
+    currentSticky(id).isList
       ? setStickies([
           ...stickies.filter((sticky) => sticky.id !== id),
-          { ...sticky, isList: false, text: sticky.list[0], list: [] },
+          {
+            ...currentSticky(id),
+            isList: false,
+            text: currentSticky(id).list[0],
+            list: [],
+          },
         ])
       : setStickies([
           ...stickies.filter((sticky) => sticky.id !== id),
           {
-            ...sticky,
+            ...currentSticky(id),
             isList: true,
             text: "",
-            list: [sticky.text, "more list items"],
+            list: [currentSticky(id).text, "more list items"],
           },
         ]);
+    console.log(currentSticky(id).list);
   };
 
   const handleDelete = (id: number) => {
@@ -88,9 +103,10 @@ const App = () => {
       />
       <Stickies
         stickies={stickies}
-        onChangeColor={(id) => handleChangeColor(id)}
-        onToggleList={(id) => handleToggleList(id)}
-        onDelete={(id) => handleDelete(id)}
+        onTextChange={handleTextChange}
+        onChangeColor={handleChangeColor}
+        onToggleList={handleToggleList}
+        onDelete={handleDelete}
       />
     </>
   );
