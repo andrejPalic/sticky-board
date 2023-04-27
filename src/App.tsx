@@ -45,11 +45,46 @@ const App = () => {
     setStickies([]);
   };
 
-  const handleTextChange = (text: any, id: number) => {
+  const handleTextChange = (id: number, text: string) => {
     setPrevStickies([...stickies]);
     setStickies([
       ...stickies.filter((sticky) => sticky.id !== id),
       { ...currentSticky(id), text: text },
+    ]);
+  };
+
+  const handleLiChange = (id: number, itemId: number, text: string) => {
+    setPrevStickies([...stickies]);
+
+    let list = [...currentSticky(id).list];
+    let listItemArray = list.map((item) => item.itemId);
+
+    list = [
+      ...list.slice(0, listItemArray.indexOf(itemId)),
+      { itemId, text },
+      ...list.slice(listItemArray.indexOf(itemId) + 1),
+    ];
+
+    itemId === listItemArray[listItemArray.length - 1]
+      ? (list = [...list, { itemId: Math.random(), text: "" }])
+      : null;
+
+    setStickies([
+      ...stickies.filter((sticky) => sticky.id !== id),
+      { ...currentSticky(id), list: list },
+    ]);
+  };
+
+  const handleLiDelete = (id: number, itemId: number) => {
+    setPrevStickies([...stickies]);
+
+    let list = currentSticky(id).list.filter(
+      (listItem) => listItem.itemId !== itemId
+    );
+
+    setStickies([
+      ...stickies.filter((sticky) => sticky.id !== id),
+      { ...currentSticky(id), list: list },
     ]);
   };
 
@@ -90,17 +125,18 @@ const App = () => {
               ...currentSticky(id)
                 .text.split("<br>")
                 .filter((line) => line !== "")
-                .map((text) => ({ id: Math.random(), text })),
-              { id: 0, text: "" },
+                .map((text) => ({ itemId: Math.random(), text })),
+              { itemId: Math.random(), text: "" },
             ],
           },
         ]);
-    console.log(currentSticky(id));
   };
 
   const handleDelete = (id: number) => {
     setPrevStickies([...stickies]);
     setStickies([...stickies.filter((sticky) => sticky.id !== id)]);
+    console.clear();
+    console.log("handeDelete");
   };
 
   return (
@@ -113,6 +149,8 @@ const App = () => {
       <Stickies
         stickies={stickies}
         onTextChange={handleTextChange}
+        onLiChange={handleLiChange}
+        onLiDelete={handleLiDelete}
         onChangeColor={handleChangeColor}
         onToggleList={handleToggleList}
         onDelete={handleDelete}

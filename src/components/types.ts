@@ -3,5 +3,5 @@ export interface Sticky {
   color: string;
   isList: boolean;
   text: string;
-  list: { id: number; text: string }[];
+  list: { itemId: number; text: string }[];
 }

@@ -1,46 +1,40 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 interface Props {
   text: string;
-  onTextChange: (text: any) => void;
+  onTextChange: (text: string) => void;
   onDelete: () => void;
 }
 
 const StickyText = ({ text, onTextChange, onDelete }: Props) => {
-  const p = useRef<HTMLParagraphElement>(null);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const displayText = text ? text : isInitialized ? "" : "Note here";
 
-  const handleFocus = () => {
-    setIsInitialized(true);
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLParagraphElement>) => {
     e.key === "Enter" && !e.shiftKey
-      ? (e.preventDefault(), p.current?.blur())
-      : p.current?.textContent + "<br>";
+      ? (e.preventDefault(), e.currentTarget.blur())
+      : e.currentTarget.innerHTML + "<br>";
   };
 
-  const handleBlur = () => {
-    p.current?.textContent === ""
+  const handleBlur = (e: React.FocusEvent<HTMLParagraphElement>) => {
+    e.currentTarget.innerHTML === ""
       ? onDelete()
-      : text !== p.current?.innerHTML
-      ? onTextChange(p.current?.innerHTML.toString())
+      : e.currentTarget.innerHTML !== text
+      ? onTextChange(e.currentTarget.innerHTML.toString())
       : null;
   };
 
   return (
     <p
-      ref={p}
-      className={text !== "" || isInitialized ? "isInitialized" : "placeholder"}
+      className={text !== "" || isInitialized ? "" : "placeholder"}
       dangerouslySetInnerHTML={{ __html: displayText }}
       contentEditable
       spellCheck={false}
-      onFocus={handleFocus}
+      onFocus={() => setIsInitialized(true)}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
-    ></p>
+    />
   );
 };
 
