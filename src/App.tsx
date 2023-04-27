@@ -68,25 +68,34 @@ const App = () => {
     setPrevStickies([...stickies]);
 
     currentSticky(id).isList
-      ? setStickies([
+      ? (currentSticky(id).list.pop(),
+        setStickies([
           ...stickies.filter((sticky) => sticky.id !== id),
           {
             ...currentSticky(id),
             isList: false,
-            text: currentSticky(id).list[0],
+            text: currentSticky(id)
+              .list.map((item) => item.text)
+              .join("<br>"),
             list: [],
           },
-        ])
+        ]))
       : setStickies([
           ...stickies.filter((sticky) => sticky.id !== id),
           {
             ...currentSticky(id),
             isList: true,
             text: "",
-            list: [currentSticky(id).text, "more list items"],
+            list: [
+              ...currentSticky(id)
+                .text.split("<br>")
+                .filter((line) => line !== "")
+                .map((text) => ({ id: Math.random(), text })),
+              { id: 0, text: "" },
+            ],
           },
         ]);
-    console.log(currentSticky(id).list);
+    console.log(currentSticky(id));
   };
 
   const handleDelete = (id: number) => {

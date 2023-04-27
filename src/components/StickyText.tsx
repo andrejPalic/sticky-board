@@ -33,7 +33,7 @@ const StickyText = ({ text, onTextChange, onDelete }: Props) => {
   return (
     <p
       ref={p}
-      className={isInitialized ? "isInitialized" : "placeholder"}
+      className={text !== "" || isInitialized ? "isInitialized" : "placeholder"}
       dangerouslySetInnerHTML={{ __html: displayText }}
       contentEditable
       spellCheck={false}

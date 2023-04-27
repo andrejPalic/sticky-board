@@ -1,5 +1,6 @@
 import { Sticky } from "./types";
 import StickyText from "./StickyText";
+import StickyList from "./StickyList";
 import StickyButtons from "./StickyButtons";
 import "./StickyNote.css";
 
@@ -20,11 +21,15 @@ const StickyNote = ({
 }: Props) => {
   return (
     <div className={sticky.color}>
-      <StickyText
-        text={sticky.text}
-        onTextChange={onTextChange}
-        onDelete={onDelete}
-      />
+      {!sticky.isList ? (
+        <StickyText
+          text={sticky.text}
+          onTextChange={onTextChange}
+          onDelete={onDelete}
+        />
+      ) : (
+        <StickyList list={sticky.list} />
+      )}
       <StickyButtons
         onChangeColor={onChangeColor}
         onToggleList={onToggleList}
