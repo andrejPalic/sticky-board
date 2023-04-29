@@ -2,6 +2,7 @@ import { useState } from "react";
 import BoardButtons from "./components/BoardButtons";
 import Stickies from "./components/Stickies";
 import { Sticky } from "./components/types";
+import "./components/styles.css";
 
 const App = () => {
   const [stickies, setStickies] = useState<Sticky[]>([]);
@@ -21,6 +22,10 @@ const App = () => {
 
   const newSticky: Sticky = {
     id: new Date().getTime(),
+    position: {
+      top: `${getRandom(15, 75)}%`,
+      left: `${getRandom(7.5, 87.5)}%`,
+    },
     color: colorsArr[getRandom(0, 4)],
     isList: false,
     text: "",
@@ -43,6 +48,20 @@ const App = () => {
   const handleReset = () => {
     setPrevStickies([]);
     setStickies([]);
+  };
+
+  const handleUpdatePosition = (id: number, top: string, left: string) => {
+    if (
+      currentSticky(id).position.top === top &&
+      currentSticky(id).position.left === left
+    )
+      return;
+
+    setPrevStickies([...stickies]);
+    setStickies([
+      ...stickies.filter((sticky) => sticky.id !== id),
+      { ...currentSticky(id), position: { top: top, left: left } },
+    ]);
   };
 
   const handleTextChange = (id: number, text: string) => {
@@ -135,8 +154,6 @@ const App = () => {
   const handleDelete = (id: number) => {
     setPrevStickies([...stickies]);
     setStickies([...stickies.filter((sticky) => sticky.id !== id)]);
-    console.clear();
-    console.log("handeDelete");
   };
 
   return (
@@ -148,6 +165,7 @@ const App = () => {
       />
       <Stickies
         stickies={stickies}
+        onUpdatePosition={handleUpdatePosition}
         onTextChange={handleTextChange}
         onLiChange={handleLiChange}
         onLiDelete={handleLiDelete}

@@ -2,12 +2,13 @@ import { useState } from "react";
 
 interface Props {
   text: string;
+  isDragged: boolean;
   onTextChange: (text: string) => void;
   onDelete: () => void;
 }
 
-const StickyText = ({ text, onTextChange, onDelete }: Props) => {
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+const StickyText = ({ text, isDragged, onTextChange, onDelete }: Props) => {
+  const [isInitialized, setInitialized] = useState<boolean>(false);
 
   const displayText = text ? text : isInitialized ? "" : "Note here";
 
@@ -29,9 +30,9 @@ const StickyText = ({ text, onTextChange, onDelete }: Props) => {
     <p
       className={text !== "" || isInitialized ? "" : "placeholder"}
       dangerouslySetInnerHTML={{ __html: displayText }}
-      contentEditable
+      contentEditable={!isDragged}
       spellCheck={false}
-      onFocus={() => setIsInitialized(true)}
+      onFocus={() => setInitialized(true)}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
     />

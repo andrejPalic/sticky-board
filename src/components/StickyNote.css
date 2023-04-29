@@ -1,3 +1,20 @@
+.sticky {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 288px;
+  margin: 2.5%;
+  border-radius: 1em;
+  box-shadow: 3em 3em 5em rgba(0, 0, 0, 0.25);
+}
+
+.sticky::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+  border-radius: 1em;
+  box-shadow: inset 3em 3em 5em rgba(255, 255, 255, 0.25);
+}
+
 .sticky-pink {
   background: #fdb9c9;
 }
@@ -18,6 +35,42 @@
   background: #bbf6f3;
 }
 
+.sticky > p {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  height: 90%;
+  width: 90%;
+  outline: none;
+  padding: 0.1em;
+}
+
+.sticky > p:focus {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 1em;
+}
+
+.sticky > ul {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  height: 90%;
+  width: 85%;
+  padding: 0.1em;
+}
+
+.sticky > ul > li:focus {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.2em;
+  outline: none;
+}
+
 .placeholder {
   color: rgba(0, 0, 0, 0.5);
+}
+
+.stickyButtons {
+  position: absolute;
+  top: 90%;
+  left: 2.5%;
 }

@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#boardButtons {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+#stickies {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: darkslategray;
+}

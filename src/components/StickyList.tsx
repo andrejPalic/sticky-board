@@ -3,12 +3,19 @@ import ListItem from "./ListItem";
 
 interface Props {
   list: Sticky["list"];
+  isDragged: boolean;
   onLiChange: (itemId: number, text: string) => void;
   onLiDelete: (itemId: number) => void;
   onDelete: () => void;
 }
 
-const StickyList = ({ list, onLiChange, onLiDelete, onDelete }: Props) => {
+const StickyList = ({
+  list,
+  isDragged,
+  onLiChange,
+  onLiDelete,
+  onDelete,
+}: Props) => {
   let lastId = list[list.length - 1].itemId;
 
   const handleLiDelete = (itemId: number) => {
@@ -21,17 +28,18 @@ const StickyList = ({ list, onLiChange, onLiDelete, onDelete }: Props) => {
   };
 
   return (
-    <div>
+    <ul>
       {list.map((listItem) => (
         <ListItem
           key={listItem.itemId}
           text={listItem.text.toString()}
+          isDragged={isDragged}
           isLast={listItem.itemId === lastId}
           onLiChange={(text) => onLiChange(listItem.itemId, text)}
           onLiDelete={() => handleLiDelete(listItem.itemId)}
         />
       ))}
-    </div>
+    </ul>
   );
 };
 

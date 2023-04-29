@@ -6,7 +6,7 @@ interface Props {
 
 const StickyButtons = ({ onChangeColor, onToggleList, onDelete }: Props) => {
   return (
-    <div>
+    <div className="stickyButtons">
       <button onClick={onChangeColor}>Change Color</button>
       <button onClick={onToggleList}>Toggle List</button>
       <button onClick={onDelete}>Delete</button>

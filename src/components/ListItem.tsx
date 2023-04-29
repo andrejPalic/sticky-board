@@ -3,11 +3,18 @@ import { useState } from "react";
 interface Props {
   text: string;
   isLast: boolean;
+  isDragged: boolean;
   onLiChange: (text: string) => void;
   onLiDelete: () => void;
 }
 
-const ListItem = ({ text, isLast, onLiChange, onLiDelete }: Props) => {
+const ListItem = ({
+  text,
+  isLast,
+  isDragged,
+  onLiChange,
+  onLiDelete,
+}: Props) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
@@ -28,7 +35,8 @@ const ListItem = ({ text, isLast, onLiChange, onLiDelete }: Props) => {
     <li
       className={text === "" && isLast && !isFocused ? "placeholder" : ""}
       dangerouslySetInnerHTML={{ __html: text }}
-      contentEditable
+      contentEditable={!isDragged}
+      style={{ userSelect: isDragged ? "none" : "auto" }}
       spellCheck={false}
       onFocus={() => setIsFocused(true)}
       onKeyDown={handleKeyDown}
