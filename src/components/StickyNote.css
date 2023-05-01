@@ -35,6 +35,12 @@
   background: #bbf6f3;
 }
 
+.isBlurred:not(:hover) {
+  filter: blur(5px);
+  z-index: -1;
+  pointer-events: none;
+}
+
 .sticky > p {
   position: absolute;
   top: 5%;

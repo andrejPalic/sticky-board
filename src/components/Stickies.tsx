@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Sticky } from "./types";
 import StickyNote from "./StickyNote";
 
@@ -22,6 +23,16 @@ const Stickies = ({
   onToggleList,
   onDelete,
 }: Props) => {
+  const [isBlurred, setBlurred] = useState<boolean>(false);
+  const setBlur = (blur: boolean) => {
+    setBlurred(blur);
+  };
+
+  const handleDelete = (id: number) => {
+    setBlur(false);
+    onDelete(id);
+  };
+
   return (
     <div id="stickies">
       {stickies.map((sticky: Sticky) => (
@@ -31,12 +42,14 @@ const Stickies = ({
           onUpdatePosition={(top, left) =>
             onUpdatePosition(sticky.id, top, left)
           }
+          applyBlur={setBlur}
+          isBlurred={isBlurred}
           onTextChange={(text) => onTextChange(sticky.id, text)}
           onLiChange={(itemId, text) => onLiChange(sticky.id, itemId, text)}
           onLiDelete={(itemId) => onLiDelete(sticky.id, itemId)}
           onChangeColor={() => onChangeColor(sticky.id)}
           onToggleList={() => onToggleList(sticky.id)}
-          onDelete={() => onDelete(sticky.id)}
+          onDelete={() => handleDelete(sticky.id)}
         />
       ))}
     </div>

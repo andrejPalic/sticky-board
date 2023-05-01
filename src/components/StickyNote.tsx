@@ -7,6 +7,8 @@ import "./StickyNote.css";
 
 interface Props {
   sticky: Sticky;
+  applyBlur: (isDragged: boolean) => void;
+  isBlurred: boolean;
   onUpdatePosition: (top: string, left: string) => void;
   onTextChange: (text: string) => void;
   onLiChange: (itemId: number, text: string) => void;
@@ -18,6 +20,8 @@ interface Props {
 
 const StickyNote = ({
   sticky,
+  applyBlur,
+  isBlurred,
   onUpdatePosition,
   onTextChange,
   onLiChange,
@@ -65,13 +69,15 @@ const StickyNote = ({
 
   return (
     <div
-      className={`sticky ${sticky.color}`}
+      className={`sticky ${sticky.color} ${isBlurred ? "isBlurred" : ""}`}
       ref={stickyRef}
       style={{
         top: sticky.position.top,
         left: sticky.position.left,
       }}
+      onMouseEnter={() => applyBlur(true)}
       onMouseDown={handleMouseDown}
+      onMouseLeave={() => applyBlur(false)}
     >
       {!sticky.isList ? (
         <StickyText
