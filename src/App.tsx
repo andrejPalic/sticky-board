@@ -1,16 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BoardButtons from "./components/BoardButtons";
 import Stickies from "./components/Stickies";
 import { Sticky } from "./components/types";
 import "./components/styles.css";
 
 const App = () => {
+  const [isLoaded, setLoaded] = useState<boolean>(false);
   const [stickies, setStickies] = useState<Sticky[]>([]);
   const [prevStickies, setPrevStickies] = useState<Sticky[]>([]);
-
-  const getRandom = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
 
   const colorsArr = [
     "sticky-pink",
@@ -19,6 +16,24 @@ const App = () => {
     "sticky-lime",
     "sticky-cyan",
   ];
+
+  useEffect(() => {
+    const storedStickies = localStorage.getItem("stickies");
+    if (storedStickies && !isLoaded) {
+      setStickies(JSON.parse(storedStickies));
+      setPrevStickies(JSON.parse(storedStickies));
+    }
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    localStorage.setItem("stickies", JSON.stringify(stickies));
+  }, [stickies]);
+
+  const getRandom = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
   const newSticky: Sticky = {
     id: new Date().getTime(),
@@ -48,6 +63,7 @@ const App = () => {
   const handleReset = () => {
     setPrevStickies([]);
     setStickies([]);
+    localStorage.clear();
   };
 
   const handleUpdatePosition = (id: number, top: string, left: string) => {
