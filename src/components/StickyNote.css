@@ -5,6 +5,9 @@
   margin: 2.5%;
   border-radius: 1em;
   box-shadow: 3em 3em 5em rgba(0, 0, 0, 0.25);
+
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight: 500;
 }
 
 .sticky::after {
@@ -49,6 +52,8 @@
   width: 90%;
   outline: none;
   padding: 0.1em;
+  overflow-wrap: normal;
+  overflow: auto;
 }
 
 .sticky > p:focus {

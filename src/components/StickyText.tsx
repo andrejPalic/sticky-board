@@ -12,6 +12,25 @@ const StickyText = ({ text, isDragged, onTextChange, onDelete }: Props) => {
 
   const displayText = text ? text : isInitialized ? "" : "Note here";
 
+  const handleFontSize = (e: React.KeyboardEvent<HTMLParagraphElement>) => {
+    const fontSize = ["large", "x-large", "xx-large"];
+    const p = e.currentTarget;
+
+    while (
+      (p.clientHeight === p.scrollHeight || p.clientWidth !== p.scrollWidth) &&
+      p.style.fontSize !== "xx-large"
+    ) {
+      p.style.fontSize = fontSize[fontSize.indexOf(p.style.fontSize) + 1];
+    }
+    while (
+      (p.clientHeight !== p.scrollHeight || p.clientWidth !== p.scrollWidth) &&
+      p.style.fontSize !== "large"
+    ) {
+      p.style.fontSize =
+        fontSize[fontSize.indexOf(e.currentTarget.style.fontSize) - 1];
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLParagraphElement>) => {
     e.key === "Enter" && !e.shiftKey
       ? (e.preventDefault(), e.currentTarget.blur())
@@ -33,6 +52,7 @@ const StickyText = ({ text, isDragged, onTextChange, onDelete }: Props) => {
       contentEditable={!isDragged}
       spellCheck={false}
       onFocus={() => setInitialized(true)}
+      onInput={handleFontSize}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
     />
