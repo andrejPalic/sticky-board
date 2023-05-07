@@ -3,14 +3,26 @@ import { useState } from "react";
 interface Props {
   text: string;
   isDragged: boolean;
+  trackFocus: (focus: boolean) => void;
   onTextChange: (text: string) => void;
   onDelete: () => void;
 }
 
-const StickyText = ({ text, isDragged, onTextChange, onDelete }: Props) => {
+const StickyText = ({
+  text,
+  isDragged,
+  trackFocus,
+  onTextChange,
+  onDelete,
+}: Props) => {
   const [isInitialized, setInitialized] = useState<boolean>(false);
 
   const displayText = text ? text : isInitialized ? "" : "Note here";
+
+  const handleFocus = () => {
+    setInitialized(true);
+    trackFocus(true);
+  };
 
   const handleFontSize = (e: React.KeyboardEvent<HTMLParagraphElement>) => {
     const fontSize = ["large", "x-large", "xx-large"];
@@ -43,6 +55,7 @@ const StickyText = ({ text, isDragged, onTextChange, onDelete }: Props) => {
       : e.currentTarget.innerHTML !== text
       ? onTextChange(e.currentTarget.innerHTML.toString())
       : null;
+    trackFocus(false);
   };
 
   return (
@@ -51,7 +64,7 @@ const StickyText = ({ text, isDragged, onTextChange, onDelete }: Props) => {
       dangerouslySetInnerHTML={{ __html: displayText }}
       contentEditable={!isDragged}
       spellCheck={false}
-      onFocus={() => setInitialized(true)}
+      onFocus={handleFocus}
       onInput={handleFontSize}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}

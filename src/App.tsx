@@ -173,7 +173,7 @@ const App = () => {
   };
 
   return (
-    <>
+    <div id="stickyBoard">
       <BoardButtons
         onNewSticky={handleNewSticky}
         onUndo={handleUndo}
@@ -189,7 +189,7 @@ const App = () => {
         onToggleList={handleToggleList}
         onDelete={handleDelete}
       />
-    </>
+    </div>
   );
 };
 

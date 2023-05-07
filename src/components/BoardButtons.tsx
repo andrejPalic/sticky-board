@@ -1,3 +1,7 @@
+import { CiStickyNote } from "react-icons/ci";
+import { AiOutlineUndo } from "react-icons/ai";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+
 interface Props {
   onNewSticky: () => void;
   onUndo: () => void;
@@ -7,9 +11,9 @@ interface Props {
 const BoardButtons = ({ onNewSticky, onUndo, onReset }: Props) => {
   return (
     <div id="boardButtons">
-      <button onClick={onNewSticky}>New Sticky</button>
-      <button onClick={onUndo}>Undo</button>
-      <button onClick={onReset}>Reset</button>
+      <CiStickyNote onClick={onNewSticky} style={{ strokeWidth: "1px" }} />
+      <AiOutlineUndo onClick={onUndo} />
+      <MdOutlineDeleteOutline onClick={onReset} />
     </div>
   );
 };

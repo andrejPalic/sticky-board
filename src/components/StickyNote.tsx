@@ -30,8 +30,9 @@ const StickyNote = ({
   onToggleList,
   onDelete,
 }: Props) => {
-  const [isDragged, setDragged] = useState<boolean>(false);
   const stickyRef = useRef<HTMLDivElement>(null);
+  const [isDragged, setDragged] = useState<boolean>(false);
+  const [isFocused, setFocused] = useState<boolean>(false);
 
   useEffect(() => {
     if (!stickyRef.current || isDragged) return;
@@ -49,6 +50,7 @@ const StickyNote = ({
 
     const handleMouseMove = (e: any) => {
       setDragged(true);
+      setFocused(false);
 
       const newStickyY = (e.clientY / window.innerHeight) * 100;
       const newStickyX = (e.clientX / window.innerWidth) * 100;
@@ -69,7 +71,9 @@ const StickyNote = ({
 
   return (
     <div
-      className={`sticky ${sticky.color} ${isBlurred ? "isBlurred" : ""}`}
+      className={`sticky ${sticky.color}
+      ${isFocused || isDragged ? "isBusy" : ""}
+      ${isBlurred ? "isBlurred" : ""}`}
       ref={stickyRef}
       style={{
         top: sticky.position.top,
@@ -83,6 +87,7 @@ const StickyNote = ({
         <StickyText
           text={sticky.text}
           isDragged={isDragged}
+          trackFocus={(focus) => setFocused(focus)}
           onTextChange={onTextChange}
           onDelete={onDelete}
         />
@@ -90,6 +95,7 @@ const StickyNote = ({
         <StickyList
           list={sticky.list}
           isDragged={isDragged}
+          trackFocus={(focus) => setFocused(focus)}
           onLiChange={onLiChange}
           onLiDelete={onLiDelete}
           onDelete={onDelete}

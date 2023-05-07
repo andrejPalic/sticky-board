@@ -3,18 +3,31 @@
   padding: 0;
 }
 
-#boardButtons {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-}
-
-#stickies {
+#stickyBoard {
   position: fixed;
-  top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
   background: darkslategray;
+  overflow: hidden;
+}
+
+#boardButtons {
+  float: right;
+  display: flex;
+  flex-direction: column;
+}
+
+#boardButtons > svg {
+  color: #b0b0b0;
+  font-size: 70px;
+}
+
+#boardButtons > svg:hover {
+  color: #536878;
+  transition: 0.25s color ease-in;
+}
+
+#boardButtons > svg:active {
+  color: black;
+  transition: 0.1s color ease-out;
 }

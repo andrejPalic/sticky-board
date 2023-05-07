@@ -4,6 +4,7 @@ interface Props {
   text: string;
   isLast: boolean;
   isDragged: boolean;
+  trackFocus: (focus: boolean) => void;
   onLiChange: (text: string) => void;
   onLiDelete: () => void;
 }
@@ -12,10 +13,16 @@ const ListItem = ({
   text,
   isLast,
   isDragged,
+  trackFocus,
   onLiChange,
   onLiDelete,
 }: Props) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    trackFocus(true);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
     e.key === "Enter" && (e.preventDefault(), e.currentTarget.blur());
@@ -23,6 +30,7 @@ const ListItem = ({
 
   const handleBlur = (e: React.FocusEvent<HTMLLIElement>) => {
     setIsFocused(false);
+    trackFocus(false);
 
     e.currentTarget.innerHTML === ""
       ? onLiDelete()
@@ -38,7 +46,7 @@ const ListItem = ({
       contentEditable={!isDragged}
       style={{ userSelect: isDragged ? "none" : "auto" }}
       spellCheck={false}
-      onFocus={() => setIsFocused(true)}
+      onFocus={handleFocus}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
     />

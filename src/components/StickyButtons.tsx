@@ -1,3 +1,6 @@
+import { IoColorPaletteOutline, IoListOutline } from "react-icons/io5";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+
 interface Props {
   onChangeColor: () => void;
   onToggleList: () => void;
@@ -6,10 +9,10 @@ interface Props {
 
 const StickyButtons = ({ onChangeColor, onToggleList, onDelete }: Props) => {
   return (
-    <div className="stickyButtons">
-      <button onClick={onChangeColor}>Change Color</button>
-      <button onClick={onToggleList}>Toggle List</button>
-      <button onClick={onDelete}>Delete</button>
+    <div>
+      <IoColorPaletteOutline onClick={onChangeColor} />
+      <IoListOutline onClick={onToggleList} />
+      <MdOutlineDeleteOutline onClick={onDelete} />
     </div>
   );
 };

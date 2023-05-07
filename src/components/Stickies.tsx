@@ -34,7 +34,7 @@ const Stickies = ({
   };
 
   return (
-    <div id="stickies">
+    <>
       {stickies.map((sticky: Sticky) => (
         <StickyNote
           key={sticky.id}
@@ -52,7 +52,7 @@ const Stickies = ({
           onDelete={() => handleDelete(sticky.id)}
         />
       ))}
-    </div>
+    </>
   );
 };
 
