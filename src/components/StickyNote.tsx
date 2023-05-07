@@ -33,6 +33,7 @@ const StickyNote = ({
   const stickyRef = useRef<HTMLDivElement>(null);
   const [isDragged, setDragged] = useState<boolean>(false);
   const [isFocused, setFocused] = useState<boolean>(false);
+  const [isClickable, setClickable] = useState<boolean>(true);
 
   useEffect(() => {
     if (!stickyRef.current || isDragged) return;
@@ -42,7 +43,9 @@ const StickyNote = ({
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.shiftKey || (e.target as Element).tagName === "BUTTON") return;
+    if (!isClickable) return;
 
+    let timeout: number;
     const stickyCurr = stickyRef.current!;
     const stickyRect = stickyCurr.getBoundingClientRect();
     e.clientY = stickyRect.top;
@@ -51,6 +54,7 @@ const StickyNote = ({
     const handleMouseMove = (e: any) => {
       setDragged(true);
       setFocused(false);
+      clearTimeout(timeout);
 
       const newStickyY = (e.clientY / window.innerHeight) * 100;
       const newStickyX = (e.clientX / window.innerWidth) * 100;
@@ -63,10 +67,16 @@ const StickyNote = ({
       setDragged(false);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+
+      timeout = setTimeout(() => {
+        setClickable(true);
+      }, 300);
     };
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
+
+    setClickable(false);
   };
 
   return (
