@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface Props {
   text: string;
@@ -15,8 +15,8 @@ const StickyText = ({
   onTextChange,
   onDelete,
 }: Props) => {
+  const textRef = useRef<HTMLParagraphElement>(null);
   const [isInitialized, setInitialized] = useState<boolean>(false);
-
   const displayText = text ? text : isInitialized ? "" : "Note here";
 
   const handleFocus = () => {
@@ -24,22 +24,28 @@ const StickyText = ({
     trackFocus(true);
   };
 
-  const handleFontSize = (e: React.KeyboardEvent<HTMLParagraphElement>) => {
+  useEffect(() => {
+    handleFontSize();
+  }, []);
+
+  const handleFontSize = () => {
     const fontSize = ["large", "x-large", "xx-large"];
-    const p = e.currentTarget;
 
     while (
-      (p.clientHeight === p.scrollHeight || p.clientWidth !== p.scrollWidth) &&
-      p.style.fontSize !== "xx-large"
+      (textRef.current!.clientHeight === textRef.current!.scrollHeight ||
+        textRef.current!.clientWidth !== textRef.current!.scrollWidth) &&
+      textRef.current!.style.fontSize !== "xx-large"
     ) {
-      p.style.fontSize = fontSize[fontSize.indexOf(p.style.fontSize) + 1];
+      textRef.current!.style.fontSize =
+        fontSize[fontSize.indexOf(textRef.current!.style.fontSize) + 1];
     }
     while (
-      (p.clientHeight !== p.scrollHeight || p.clientWidth !== p.scrollWidth) &&
-      p.style.fontSize !== "large"
+      (textRef.current!.clientHeight !== textRef.current!.scrollHeight ||
+        textRef.current!.clientWidth !== textRef.current!.scrollWidth) &&
+      textRef.current!.style.fontSize !== "large"
     ) {
-      p.style.fontSize =
-        fontSize[fontSize.indexOf(e.currentTarget.style.fontSize) - 1];
+      textRef.current!.style.fontSize =
+        fontSize[fontSize.indexOf(textRef.current!.style.fontSize) - 1];
     }
   };
 
@@ -49,11 +55,11 @@ const StickyText = ({
       : e.currentTarget.innerHTML + "<br>";
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLParagraphElement>) => {
-    e.currentTarget.innerHTML === ""
+  const handleBlur = () => {
+    textRef.current!.innerHTML === ""
       ? onDelete()
-      : e.currentTarget.innerHTML !== text
-      ? onTextChange(e.currentTarget.innerHTML.toString())
+      : textRef.current!.innerHTML !== text
+      ? onTextChange(textRef.current!.innerHTML.toString())
       : null;
     trackFocus(false);
   };
@@ -61,6 +67,7 @@ const StickyText = ({
   return (
     <p
       className={text !== "" || isInitialized ? "" : "placeholder"}
+      ref={textRef}
       dangerouslySetInnerHTML={{ __html: displayText }}
       contentEditable={!isDragged}
       spellCheck={false}
