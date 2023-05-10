@@ -41,6 +41,4 @@ Check it out at [StickyBoard](https://sticky-board.vercel.app) or
 
 - Tooltips and/or intro screen.
 
-- Mobile support.
-
 - Abbreviation system for longer text which will expand to full screen for reading and editing.

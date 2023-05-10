@@ -1,7 +1,7 @@
 .sticky {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 288px;
+  width: 3in;
   margin: 2.5%;
   border-radius: 1em;
   box-shadow: 3em 3em 5em rgba(0, 0, 0, 0.25);
@@ -86,7 +86,7 @@
   visibility: hidden;
   background-color: inherit;
   opacity: 0;
-  border-radius: 0 1em 1em 1em;
+  border-radius: 0 1em 1em 0;
   box-shadow: inset 0 3em 1em rgba(255, 255, 255, 0.25);
 }
 
@@ -109,4 +109,14 @@
 .sticky > div > svg:active {
   color: black;
   transition: 0.1s color ease-out;
+}
+
+@media only screen and (max-width: 480px) {
+  .sticky {
+    width: calc(1.875in);
+  }
+
+  .sticky > div > svg {
+    font-size: 37.5px;
+  }
 }
