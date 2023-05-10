@@ -51,7 +51,7 @@ const StickyNote = ({
     e.clientY = stickyRect.top;
     e.clientX = stickyRect.left;
 
-    const handleMouseMove = (e: any) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setDragged(true);
       setFocused(false);
       clearTimeout(timeout);
@@ -79,6 +79,30 @@ const StickyNote = ({
     setClickable(false);
   };
 
+  const handleTouchStart = () => {
+    const stickyCurr = stickyRef.current!;
+
+    const handleTouchMove = (e: TouchEvent) => {
+      setDragged(true);
+      applyBlur(true);
+      setFocused(false);
+
+      const newStickyY = (e.touches[0].clientY / window.innerHeight) * 100;
+      const newStickyX = (e.touches[0].clientX / window.innerWidth) * 100;
+
+      stickyCurr.style.top = `${newStickyY}%`;
+      stickyCurr.style.left = `${newStickyX}%`;
+    };
+    const handleTouchEnd = () => {
+      applyBlur(false);
+      setDragged(false);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
+    };
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
+  };
+
   return (
     <div
       className={`sticky ${sticky.color}
@@ -91,6 +115,7 @@ const StickyNote = ({
       }}
       onMouseEnter={() => applyBlur(true)}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       onMouseLeave={() => applyBlur(false)}
     >
       {!sticky.isList ? (

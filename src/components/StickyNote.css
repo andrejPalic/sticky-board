@@ -38,7 +38,7 @@
   background: #bbf6f3;
 }
 
-.isBlurred:not(:hover) {
+.isBlurred:not(:hover):not(.isBusy) {
   filter: blur(5px);
   z-index: -1;
   pointer-events: none;
