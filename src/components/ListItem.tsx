@@ -28,6 +28,13 @@ const ListItem = ({
     e.key === "Enter" && (e.preventDefault(), e.currentTarget.blur());
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLLIElement>) => {
+    e.preventDefault();
+
+    const pastedText = e.clipboardData.getData("text/plain");
+    document.execCommand("insertText", false, pastedText);
+  };
+
   const handleBlur = (e: React.FocusEvent<HTMLLIElement>) => {
     setIsFocused(false);
     trackFocus(false);
@@ -48,6 +55,7 @@ const ListItem = ({
       spellCheck={false}
       onFocus={handleFocus}
       onKeyDown={handleKeyDown}
+      onPaste={handlePaste}
       onBlur={handleBlur}
     />
   );

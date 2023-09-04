@@ -55,6 +55,13 @@ const StickyText = ({
       : e.currentTarget.innerHTML + "<br>";
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLParagraphElement>) => {
+    e.preventDefault();
+
+    const pastedText = e.clipboardData.getData("text/plain");
+    document.execCommand("insertText", false, pastedText);
+  };
+
   const handleBlur = () => {
     textRef.current!.innerHTML === ""
       ? onDelete()
@@ -74,6 +81,7 @@ const StickyText = ({
       onFocus={handleFocus}
       onInput={handleFontSize}
       onKeyDown={handleKeyDown}
+      onPaste={handlePaste}
       onBlur={handleBlur}
     />
   );
