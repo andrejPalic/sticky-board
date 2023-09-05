@@ -33,6 +33,12 @@ const Stickies = ({
     onDelete(id);
   };
 
+  const handleTouchMove = (e: TouchEvent) => {
+    (e.target as Element).closest(".sticky") && e.preventDefault();
+  };
+
+  document.addEventListener("touchmove", handleTouchMove, { passive: false });
+
   return (
     <>
       {stickies.map((sticky: Sticky) => (
