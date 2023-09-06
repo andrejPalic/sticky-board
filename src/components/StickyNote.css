@@ -46,8 +46,9 @@
 
 .sticky > p {
   position: absolute;
-  top: 5%;
-  left: 5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 90%;
   width: 90%;
   outline: none;
@@ -111,9 +112,14 @@
   transition: 0.1s color ease-out;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 1028px) {
   .sticky {
     width: calc(1.875in);
+  }
+
+  .sticky > p {
+    height: 87.5%;
+    width: 87.5%;
   }
 
   .sticky > div > svg {
