@@ -30,19 +30,21 @@ const StickyList = ({
   };
 
   return (
-    <ul>
-      {list.map((listItem) => (
-        <ListItem
-          key={listItem.itemId}
-          text={listItem.text.toString()}
-          isDragged={isDragged}
-          trackFocus={trackFocus}
-          isLast={listItem.itemId === lastId}
-          onLiChange={(text) => onLiChange(listItem.itemId, text)}
-          onLiDelete={() => handleLiDelete(listItem.itemId)}
-        />
-      ))}
-    </ul>
+    <div className={"listContainer"}>
+      <ul>
+        {list.map((listItem) => (
+          <ListItem
+            key={listItem.itemId}
+            text={listItem.text.toString()}
+            isDragged={isDragged}
+            trackFocus={trackFocus}
+            isLast={listItem.itemId === lastId}
+            onLiChange={(text) => onLiChange(listItem.itemId, text)}
+            onLiDelete={() => handleLiDelete(listItem.itemId)}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

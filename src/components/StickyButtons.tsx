@@ -9,7 +9,7 @@ interface Props {
 
 const StickyButtons = ({ onChangeColor, onToggleList, onDelete }: Props) => {
   return (
-    <div>
+    <div className={"buttonsContainer"}>
       <IoColorPaletteOutline onClick={onChangeColor} />
       <IoListOutline onClick={onToggleList} />
       <MdOutlineDeleteOutline onClick={onDelete} />
